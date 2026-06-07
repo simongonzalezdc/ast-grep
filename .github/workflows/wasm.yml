@@ -23,19 +23,19 @@ jobs:
     name: Build and Test WASM
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6
       - name: Setup node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6
         with:
           node-version: 24
           cache: yarn
           cache-dependency-path: ./crates/wasm/yarn.lock
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8  # stable
         with:
           targets: wasm32-unknown-unknown
       - name: Cache cargo
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae  # v5
         with:
           path: |
             ~/.cargo/registry/index/
@@ -44,7 +44,7 @@ jobs:
             target/
           key: wasm-cargo-registry
       - name: Install wasm-pack
-        uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@56545b37b57562edd73171cb6c62cc509db4c34e  # v2
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -58,7 +58,7 @@ jobs:
       - name: Build release package
         run: yarn build:pkg
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7
         with:
           name: wasm-pkg
           path: crates/wasm/pkg
@@ -71,16 +71,16 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6
       - name: Setup node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6
         with:
           node-version: 24
           check-latest: true
           cache: yarn
           cache-dependency-path: ./crates/wasm/yarn.lock
       - name: Cache NPM dependencies
-        uses: actions/cache@v5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae  # v5
         with:
           path: .yarn/cache
           key: npm-cache-ubuntu-wasm-publish
@@ -89,7 +89,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Download artifact
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8
         with:
           name: wasm-pkg
           path: crates/wasm/pkg
